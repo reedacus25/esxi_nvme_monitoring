@@ -1,0 +1,250 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<zabbix_export>
+    <version>5.0</version>
+    <date>2021-03-03T18:33:02Z</date>
+    <groups>
+        <group>
+            <name>Templates/Storage</name>
+        </group>
+    </groups>
+    <templates>
+        <template>
+            <template>esxi-nvme-monit-$device</template>
+            <name>esxi-nvme-monit-$device</name>
+            <description>Monitor stats from esxcli nvme</description>
+            <groups>
+                <group>
+                    <name>Templates/Storage</name>
+                </group>
+            </groups>
+            <applications>
+                <application>
+                    <name>ESXi NVMe</name>
+                </application>
+            </applications>
+            <items>
+                <item>
+                    <name>Firmware Version - $device</name>
+                    <type>TRAP</type>
+                    <key>$org.esxi.nvme.$device.firmware</key>
+                    <delay>0</delay>
+                    <trends>0</trends>
+                    <value_type>TEXT</value_type>
+                    <applications>
+                        <application>
+                            <name>ESXi NVMe</name>
+                        </application>
+                    </applications>
+                    <triggers>
+                        <trigger>
+                            <expression>{change()}&lt;&gt;1</expression>
+                            <name>Firmware Versionr Changed - $device</name>
+                            <priority>INFO</priority>
+                            <manual_close>YES</manual_close>
+                            <dependencies>
+                                <dependency>
+                                    <name>Model Number Changed - $device</name>
+                                    <expression>{esxi-nvme-monit-$device:$org.esxi.nvme.$device.model.change()}&lt;&gt;1</expression>
+                                </dependency>
+                                <dependency>
+                                    <name>Serial Number Changed - $device</name>
+                                    <expression>{esxi-nvme-monit-$device:$org.esxi.nvme.$device.serial.change()}&lt;&gt;1</expression>
+                                </dependency>
+                            </dependencies>
+                        </trigger>
+                    </triggers>
+                </item>
+                <item>
+                    <name>Media Errors - $device</name>
+                    <type>TRAP</type>
+                    <key>$org.esxi.nvme.$device.media_errors</key>
+                    <delay>0</delay>
+                    <trends>0</trends>
+                    <value_type>TEXT</value_type>
+                    <applications>
+                        <application>
+                            <name>ESXi NVMe</name>
+                        </application>
+                    </applications>
+                    <triggers>
+                        <trigger>
+                            <expression>{diff()}=1</expression>
+                            <name>New Media Errors - $device</name>
+                            <priority>HIGH</priority>
+                            <manual_close>YES</manual_close>
+                        </trigger>
+                    </triggers>
+                </item>
+                <item>
+                    <name>Model Number - $device</name>
+                    <type>TRAP</type>
+                    <key>$org.esxi.nvme.$device.model</key>
+                    <delay>0</delay>
+                    <trends>0</trends>
+                    <value_type>TEXT</value_type>
+                    <applications>
+                        <application>
+                            <name>ESXi NVMe</name>
+                        </application>
+                    </applications>
+                    <triggers>
+                        <trigger>
+                            <expression>{change()}&lt;&gt;1</expression>
+                            <name>Model Number Changed - $device</name>
+                            <priority>INFO</priority>
+                            <manual_close>YES</manual_close>
+                        </trigger>
+                    </triggers>
+                </item>
+                <item>
+                    <name>Percent Used - $device</name>
+                    <type>TRAP</type>
+                    <key>$org.esxi.nvme.$device.percent_used</key>
+                    <delay>0</delay>
+                    <units>%</units>
+                    <applications>
+                        <application>
+                            <name>ESXi NVMe</name>
+                        </application>
+                    </applications>
+                    <triggers>
+                        <trigger>
+                            <expression>{last(#5)}&gt;75</expression>
+                            <name>Percentage Used Critical - $device</name>
+                            <priority>HIGH</priority>
+                            <manual_close>YES</manual_close>
+                        </trigger>
+                        <trigger>
+                            <expression>{last(#5)}&gt;50</expression>
+                            <name>Percentage Used Warning - $device</name>
+                            <priority>AVERAGE</priority>
+                            <manual_close>YES</manual_close>
+                            <dependencies>
+                                <dependency>
+                                    <name>Percentage Used Critical - $device</name>
+                                    <expression>{esxi-nvme-monit-$device:$org.esxi.nvme.$device.percent_used.last(#5)}&gt;75</expression>
+                                </dependency>
+                            </dependencies>
+                        </trigger>
+                    </triggers>
+                </item>
+                <item>
+                    <name>Reliability Warning - $device</name>
+                    <type>TRAP</type>
+                    <key>$org.esxi.nvme.$device.reliability_warn</key>
+                    <delay>0</delay>
+                    <trends>0</trends>
+                    <value_type>TEXT</value_type>
+                    <applications>
+                        <application>
+                            <name>ESXi NVMe</name>
+                        </application>
+                    </applications>
+                </item>
+                <item>
+                    <name>Read-Only Warning - $device</name>
+                    <type>TRAP</type>
+                    <key>$org.esxi.nvme.$device.ro_warn</key>
+                    <delay>0</delay>
+                    <trends>0</trends>
+                    <value_type>TEXT</value_type>
+                    <applications>
+                        <application>
+                            <name>ESXi NVMe</name>
+                        </application>
+                    </applications>
+                    <triggers>
+                        <trigger>
+                            <expression>{regexp(&quot;^(true)$&quot;,2)}=1</expression>
+                            <name>Read-Only Mode Detected</name>
+                            <priority>DISASTER</priority>
+                            <manual_close>YES</manual_close>
+                        </trigger>
+                    </triggers>
+                </item>
+                <item>
+                    <name>Serial Number - $device</name>
+                    <type>TRAP</type>
+                    <key>$org.esxi.nvme.$device.serial</key>
+                    <delay>0</delay>
+                    <trends>0</trends>
+                    <value_type>TEXT</value_type>
+                    <applications>
+                        <application>
+                            <name>ESXi NVMe</name>
+                        </application>
+                    </applications>
+                    <triggers>
+                        <trigger>
+                            <expression>{change()}&lt;&gt;1</expression>
+                            <name>Serial Number Changed - $device</name>
+                            <priority>INFO</priority>
+                            <manual_close>YES</manual_close>
+                            <dependencies>
+                                <dependency>
+                                    <name>Model Number Changed - $device</name>
+                                    <expression>{esxi-nvme-monit-$device:$org.esxi.nvme.$device.model.change()}&lt;&gt;1</expression>
+                                </dependency>
+                            </dependencies>
+                        </trigger>
+                    </triggers>
+                </item>
+                <item>
+                    <name>Composite Temperature - $device</name>
+                    <type>TRAP</type>
+                    <key>$org.esxi.nvme.$device.temp_composite</key>
+                    <delay>0</delay>
+                    <value_type>FLOAT</value_type>
+                    <units>ºC</units>
+                    <applications>
+                        <application>
+                            <name>ESXi NVMe</name>
+                        </application>
+                    </applications>
+                </item>
+                <item>
+                    <name>Temperature Warning - $device</name>
+                    <type>TRAP</type>
+                    <key>$org.esxi.nvme.$device.temp_warn</key>
+                    <delay>0</delay>
+                    <trends>0</trends>
+                    <value_type>TEXT</value_type>
+                    <applications>
+                        <application>
+                            <name>ESXi NVMe</name>
+                        </application>
+                    </applications>
+                    <triggers>
+                        <trigger>
+                            <expression>{regexp(&quot;^(true)$&quot;,2)}=1</expression>
+                            <name>Temperature Warning</name>
+                            <priority>HIGH</priority>
+                            <manual_close>YES</manual_close>
+                        </trigger>
+                    </triggers>
+                </item>
+                <item>
+                    <name>Volatile Memory Warning - $device</name>
+                    <type>TRAP</type>
+                    <key>$org.esxi.nvme.$device.vol_mem_warn</key>
+                    <delay>0</delay>
+                    <trends>0</trends>
+                    <value_type>TEXT</value_type>
+                    <applications>
+                        <application>
+                            <name>ESXi NVMe</name>
+                        </application>
+                    </applications>
+                    <triggers>
+                        <trigger>
+                            <expression>{regexp(&quot;^(true)$&quot;,2)}=1</expression>
+                            <name>Volatile Memory Warning</name>
+                            <priority>DISASTER</priority>
+                            <manual_close>YES</manual_close>
+                        </trigger>
+                    </triggers>
+                </item>
+            </items>
+        </template>
+    </templates>
+</zabbix_export>
