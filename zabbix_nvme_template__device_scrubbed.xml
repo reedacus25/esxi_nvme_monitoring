@@ -37,18 +37,18 @@
                     </applications>
                     <triggers>
                         <trigger>
-                            <expression>{change()}&lt;&gt;1</expression>
+                            <expression>{change()}=1</expression>
                             <name>Firmware Versionr Changed - $device</name>
                             <priority>INFO</priority>
                             <manual_close>YES</manual_close>
                             <dependencies>
                                 <dependency>
                                     <name>Model Number Changed - $device</name>
-                                    <expression>{esxi-nvme-monit-$device:$org.esxi.nvme.$device.model.change()}&lt;&gt;1</expression>
+                                    <expression>{esxi-nvme-monit-$device:$org.esxi.nvme.$device.model.change()}=1</expression>
                                 </dependency>
                                 <dependency>
                                     <name>Serial Number Changed - $device</name>
-                                    <expression>{esxi-nvme-monit-$device:$org.esxi.nvme.$device.serial.change()}&lt;&gt;1</expression>
+                                    <expression>{esxi-nvme-monit-$device:$org.esxi.nvme.$device.serial.change()}=1</expression>
                                 </dependency>
                             </dependencies>
                         </trigger>
@@ -89,7 +89,7 @@
                     </applications>
                     <triggers>
                         <trigger>
-                            <expression>{change()}&lt;&gt;1</expression>
+                            <expression>{change()}=1</expression>
                             <name>Model Number Changed - $device</name>
                             <priority>INFO</priority>
                             <manual_close>YES</manual_close>
@@ -176,14 +176,14 @@
                     </applications>
                     <triggers>
                         <trigger>
-                            <expression>{change()}&lt;&gt;1</expression>
+                            <expression>{change()}=1</expression>
                             <name>Serial Number Changed - $device</name>
                             <priority>INFO</priority>
                             <manual_close>YES</manual_close>
                             <dependencies>
                                 <dependency>
                                     <name>Model Number Changed - $device</name>
-                                    <expression>{esxi-nvme-monit-$device:$org.esxi.nvme.$device.model.change()}&lt;&gt;1</expression>
+                                    <expression>{esxi-nvme-monit-$device:$org.esxi.nvme.$device.model.change()}=1</expression>
                                 </dependency>
                             </dependencies>
                         </trigger>
